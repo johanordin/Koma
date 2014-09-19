@@ -1,0 +1,4 @@
+"H:\\TND002 - Java\\labb6\\labb6\\src\\GUI.java"
+"H:\\TND002 - Java\\labb6\\labb6\\src\\labb6.java"
+"H:\\TND002 - Java\\labb6\\labb6\\src\\Person.java"
+"H:\\TND002 - Java\\labb6\\labb6\\src\\Register.java"

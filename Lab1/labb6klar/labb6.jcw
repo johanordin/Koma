@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>labb6</label>
+		<id>492</id>
+		<version>0</version>
+	</settings>
+	<users>
+		<user>
+			<path>labb6.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>labb6.jcp</path>
+		</project>
+	</projects>
+</workspace>

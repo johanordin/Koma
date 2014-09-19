@@ -1,0 +1,36 @@
+public Person lookupName(String number)
+	{
+		//ex code ED
+    	int i = 0;
+    	while( i < list.size() && !number.equals(list.get(i).getNumber()) )
+    	{
+    		i++;
+    	}
+
+  		if(i < list.size() ){
+    		return list.get(i);
+  		}
+  		else{
+        	return null;
+  		}
+
+	}
+
+
+	Public Person Lookupnumber(person P)
+	{
+		//Ex Code Ed
+    	Int I = 0;
+    	While( I < List.size() && !Fname.compareto(list.get(i).getfirstname) && !Lname.compareto(list.get(i).getlastname)  )
+    	{
+    		I++;
+    	}
+
+  		If(i < List.size() ){
+    		Return List.get(i);
+  		}
+  		Else{
+        	Return Null;
+  		}
+
+	}
