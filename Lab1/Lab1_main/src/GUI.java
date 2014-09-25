@@ -18,7 +18,7 @@ public class GUI
 	
 	//--------------------------------------------//
 	//Frame
-    private JFrame mainframe;
+    public JFrame mainframe;
 	
 	//--------------------------------------------//
 	//MenuBar
@@ -73,7 +73,6 @@ public class GUI
 	 */
 	public GUI()
 	{
-		
 		JFrame mainframe = new JFrame();
 		
 		//Skapar ett nytt Register
@@ -109,7 +108,7 @@ public class GUI
 		mniExit.setAccelerator(
 				  KeyStroke.getKeyStroke(
 				    KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-		
+
 		//--------------------------------------------//
 		//Edit
 		EditListener editlistener = new EditListener();
@@ -143,7 +142,7 @@ public class GUI
         mainframe.setVisible(true);
         
         mainframe.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
+            public void windowClosing(WindowEvent windowEvent) {
                System.exit(0);
             }        
          });  
@@ -151,7 +150,8 @@ public class GUI
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	public void searchWindow(){
+	public void searchWindow() {
+		
 		
 		
 	}
@@ -216,8 +216,13 @@ public class GUI
 		
 		//--------------------------------------------//
 		//Skapar en Container 
-		Container c = new Container();
 		
+		
+		mainframe.getContentPane().removeAll();
+
+		
+		//Container c = new Container();
+		Container c = mainframe.getContentPane();
 		//mainframe.getContentPane().add(c);
 		
 		c.setLayout(new BorderLayout());
@@ -225,8 +230,7 @@ public class GUI
 		c.add(center, BorderLayout.CENTER);
 		c.add(east, BorderLayout.EAST);
 		
-		
-		mainframe.getContentPane().add(center);
+		mainframe.setContentPane(c);
 
 		mainframe.revalidate();
 		mainframe.repaint();
@@ -234,13 +238,12 @@ public class GUI
 		
 		mainframe.setVisible(true);
 		//setSize(400,600);
-		
 	}
 	
 	//--------------------------------------------//
 	//Implement FileListener
-	private class FileListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
+	private class FileListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
 			
             if (e.getSource() == mniOpen) {
             	final JFileChooser  fileDialog = new JFileChooser();
@@ -260,7 +263,7 @@ public class GUI
 		   			catch(IOException d) {
 						System.out.println("Nått gick fel");
 					}
-	               
+		   			
 	            }
 	            else {
 	            	System.out.println("Open command cancelled by user." );           
@@ -284,13 +287,13 @@ public class GUI
 	//--------------------------------------------//
 	//Implement EditListener
 	private class EditListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
+		public void actionPerformed(ActionEvent e) {
 			
             if (e.getSource() == mniAdd){
             	String add = "Add";
             	configureWindow(add);
             }
-            else if (e.getSource() == mniRemove){
+            else if (e.getSource() == mniRemove) {
             	String remove = "Remove";
             	configureWindow(remove);
             }
@@ -309,6 +312,7 @@ public class GUI
 	         }
 		}
 	}
+	
 	private class ConfigureListener implements ActionListener {
 		
 		private String func1;

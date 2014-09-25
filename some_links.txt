@@ -1,0 +1,11 @@
+search
+
+javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+
+
+
+links
+http://stackoverflow.com/questions/17858500/jframe-very-small-using-null-layout
+
+
