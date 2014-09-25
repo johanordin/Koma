@@ -31,9 +31,9 @@ public class Register {
 	 *som sedan läggs till i vektorn list.
 	 *
 	 */
-	public void load() throws IOException
+	public void load(String filename) throws IOException
 	{
-		Scanner sc = new Scanner(new File("reg.txt"));
+		Scanner sc = new Scanner(new File(filename));
 
 		while( sc.hasNext() )
 		{

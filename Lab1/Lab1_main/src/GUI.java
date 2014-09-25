@@ -159,15 +159,20 @@ public class GUI
 	}
 	
 	
-	public void configureWindow(String func){
+	public void configureWindow(String func) {
 		
+		//--------------------------------------------//
+		//Labels
 		firstname 	= new JLabel("Förnamn: ", JLabel.RIGHT);
 		lastname 	= new JLabel("Efternamn: ", JLabel.RIGHT);
 		phonenumber = new JLabel("Telefonnr: ", JLabel.RIGHT);
 		message 	= new JLabel("Meddelande: ", JLabel.RIGHT);
 		
+		//--------------------------------------------//
+		//Buttons
 		funcButton	= new JButton(func);
 
+		//--------------------------------------------//
 		//Textfields
 		fnameInput  = new JTextField("");
 		lnameInput	= new JTextField("");
@@ -238,8 +243,18 @@ public class GUI
             	
 	            if (returnVal == JFileChooser.APPROVE_OPTION) {
 	               java.io.File file = fileDialog.getSelectedFile();
-	               System.out.println("File Selected :" 
-	               + file.getName());
+	               
+	               String filename = file.getName();
+	               
+		   			try {
+						r.load(filename);
+						System.out.println("File Selected :" + file.getName());
+						//info.setText("File Selected :" + file.getName() + " öppnad");
+					}
+		   			catch(IOException d) {
+						System.out.println("Nått gick fel");
+					}
+	               
 	            }
 	            else {
 	            	System.out.println("Open command cancelled by user." );           
