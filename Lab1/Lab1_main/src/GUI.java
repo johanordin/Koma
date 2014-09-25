@@ -16,12 +16,18 @@ import java.io.*;
 public class GUI
 {
 	
-	private JMenuBar mbar = new JMenuBar();
+	//--------------------------------------------//
+	//Frame
+    private JFrame mainframe;
 	
+	//--------------------------------------------//
+	//MenuBar
+	private JMenuBar mbar = new JMenuBar();
 	private JMenu menuFile = new JMenu("File");
 	private JMenu menuEdit = new JMenu("Edit");
 	private JMenu menuHelp = new JMenu("Help");
 	
+	//--------------------------------------------//
 	//MenuFile
     private JMenuItem mniOpen = new JMenuItem("Open ...");
     private JMenuItem mniSave = new JMenuItem("Save ...");
@@ -31,19 +37,18 @@ public class GUI
     private JMenuItem mniAdd    = new JMenuItem("Add ...");
     private JMenuItem mniRemove = new JMenuItem("Remove ...");
 
-    //MenuItem
+    //MenuHelp
     private JMenuItem mniHelp  = new JMenuItem("Help ...");
     private JMenuItem mniAbout = new JMenuItem("About ...");
     
+    //--------------------------------------------//
+    //PopupMenu
     private JPopupMenu pmnEdit = new JPopupMenu("Edit");
     
     private JMenuItem pmiAdd = new JMenuItem("Add");
     private JMenuItem pmiRemove = new JMenuItem("Remove");
     
-    private JFrame mainframe;
-    
-    //-------------------------------------------------------
-    
+    //--------------------------------------------//
     //Buttons
 	private JButton funcButton;
 	private JButton removeButton;
@@ -54,13 +59,12 @@ public class GUI
 	private JLabel phonenumber;
 	private JLabel message;
 
-	//Textfield
+	//Textfields
 	private JTextField fnameInput;
 	private JTextField lnameInput;
 	private JTextField numberInput;
 	private JTextField info;
 	
-    
 	//Deklarerar ett Register
 	Register r;
 	
@@ -74,16 +78,17 @@ public class GUI
 		
 		JFrame mainframe = new JFrame();
 		
-		
 		//Skapar ett nytt Register
 		r = new Register();
 		
+		//--------------------------------------------//
+		//JMenuBar
 		mainframe.setJMenuBar(mbar);
-
 		mbar.add(menuFile);
 		mbar.add(menuEdit);
 		mbar.add(menuHelp);
 		
+		//--------------------------------------------//
 		//File
 		FileListener filelistener = new FileListener();
 		menuFile.add(mniOpen);
@@ -91,10 +96,12 @@ public class GUI
 		menuFile.addSeparator();
 		menuFile.add(mniExit);
 		
+		//File - ActionListener
 		mniOpen.addActionListener(filelistener);
 		mniSave.addActionListener(filelistener);
 		mniExit.addActionListener(filelistener);
 		
+		//File - Accelerators
 		mniOpen.setAccelerator(
 				  KeyStroke.getKeyStroke(
 				    KeyEvent.VK_O, ActionEvent.CTRL_MASK));
@@ -105,24 +112,27 @@ public class GUI
 				  KeyStroke.getKeyStroke(
 				    KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 		
+		//--------------------------------------------//
 		//Edit
 		EditListener editlistener = new EditListener();
 		menuEdit.add(mniAdd);
 		menuEdit.add(mniRemove);
 		
-
-		
+		//Edit - ActionListener
 		mniAdd.addActionListener(editlistener);
 		mniRemove.addActionListener(editlistener);
+		
+		//--------------------------------------------//
 		//Help
 		HelpListener helplistener = new HelpListener();
 		menuHelp.add(mniHelp);
 		menuHelp.add(mniAbout);
 		
+		//Edit - ActionListener
 		mniHelp.addActionListener(helplistener);
 		mniAbout.addActionListener(helplistener);
 		
-        mainframe.addMouseListener(new PopupHandler());
+		mainframe.addMouseListener(new PopupHandler());
         rightMouseListener mouselistener = new rightMouseListener();
         
         pmnEdit.add(pmiAdd);
@@ -216,144 +226,130 @@ public class GUI
 		
 	}
 	
-	
+	//--------------------------------------------//
+	//Implement FileListener
 	private class FileListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			
-            if (e.getSource() == mniOpen)
-            {
-        	final JFileChooser  fileDialog = new JFileChooser();
+            if (e.getSource() == mniOpen) {
+            	final JFileChooser  fileDialog = new JFileChooser();
         	
-        	int returnVal = fileDialog.showOpenDialog(mainframe);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-               java.io.File file = fileDialog.getSelectedFile();
-               System.out.println("File Selected :" 
-               + file.getName());
-            }
-            else{
-            	System.out.println("Open command cancelled by user." );           
-            }
+            	int returnVal = fileDialog.showOpenDialog(mainframe);
+            	
+	            if (returnVal == JFileChooser.APPROVE_OPTION) {
+	               java.io.File file = fileDialog.getSelectedFile();
+	               System.out.println("File Selected :" 
+	               + file.getName());
+	            }
+	            else {
+	            	System.out.println("Open command cancelled by user." );           
+	            }
             
             }
-            else if (e.getSource() == mniSave)
-            {
-    			try{
-    				r.save();
-    				System.out.println("Filen reg.txt sparad");
-    				}catch(IOException d)
-    				{
-    					System.out.println("Nått gick fel");
-    				}
+            else if (e.getSource() == mniSave) {
+    			try {
+					r.save();
+					System.out.println("Filen reg.txt sparad");
+				}
+    			catch(IOException d) {
+					System.out.println("Nått gick fel");
+				}
             }
-            else if (e.getSource() == mniExit)
-            {
+            else if (e.getSource() == mniExit) {
                 System.exit(0);
             }
 		}
 	}
+	//--------------------------------------------//
+	//Implement EditListener
 	private class EditListener implements ActionListener{
-		
 		public void actionPerformed(ActionEvent e){
 			
-            if (e.getSource() == mniAdd)
-            {
+            if (e.getSource() == mniAdd){
             	String add = "Add";
             	configureWindow(add);
             }
-            else if (e.getSource() == mniRemove)
-            {
+            else if (e.getSource() == mniRemove){
             	String remove = "Remove";
             	configureWindow(remove);
             }
 		}
 	}
-	
-	private class rightMouseListener implements ActionListener{
-		
+	//--------------------------------------------//
+	//Implement HelpListener
+	private class HelpListener implements ActionListener {
 		public void actionPerformed(ActionEvent e){
 			
-            if (e.getSource() == pmiAdd)
-            {
-            	String add = "Add";
-            	configureWindow(add);
-            }
-            else if (e.getSource() == pmiRemove)
-            {
-            	String remove = "Remove";
-            	configureWindow(remove);
-            }
+			 if (e.getSource() == mniHelp) {
+                JOptionPane.showMessageDialog(mainframe, "This feature is\n" + "only available in\n" + "ShapeDrawer Pro!");
+	         }
+			 else if (e.getSource() == mniAbout) {
+                JOptionPane.showMessageDialog(mainframe, "ShapeDrawer LE 1.1\n" + "Copyright 2013-2013\n" + "Amazing Software, Inc.");
+	         }
 		}
 	}
-	private class HelpListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			
-			 if (e.getSource() == mniHelp)
-	            {
-	                JOptionPane.showMessageDialog(mainframe, "This feature is\n" + "only available in\n" + "ShapeDrawer Pro!");
-	            }
-            else if (e.getSource() == mniAbout)
-	            {
-	                JOptionPane.showMessageDialog(mainframe, "ShapeDrawer LE 1.1\n" + "Copyright 2013-2013\n" + "Amazing Software, Inc.");
-	            }
-		}
-	}
-	private class ConfigureListener implements ActionListener{
+	private class ConfigureListener implements ActionListener {
 		
 		String function;
 		
-		public ConfigureListener(String func){
+		public ConfigureListener(String func) {
 			function = func;
 		}
 		
-		public void actionPerformed(ActionEvent e){
+		public void actionPerformed(ActionEvent e) {
 			
-			 if (e.getSource() == funcButton)
-	            {
-				 	System.out.println(function);
-					String fname = fnameInput.getText();
-					String lname = lnameInput.getText();
-					String number = numberInput.getText();
+			 if (e.getSource() == funcButton) {
+			 	System.out.println(function);
+				String fname = fnameInput.getText();
+				String lname = lnameInput.getText();
+				String number = numberInput.getText();
 
-					lname = lname.substring(0, 1).toUpperCase() + lname.substring(1).toLowerCase();
-					fname = fname.substring(0, 1).toUpperCase() + fname.substring(1).toLowerCase();
+				lname = lname.substring(0, 1).toUpperCase() + lname.substring(1).toLowerCase();
+				fname = fname.substring(0, 1).toUpperCase() + fname.substring(1).toLowerCase();
 
-					Person p = new Person(lname, fname, number);
-					
-					
-					if(function == "Add")
-					{
-						if (r.insert(p) == true){
+				Person p = new Person(lname, fname, number);
+				
+					if(function == "Add") {
+						if (r.insert(p) == true) {
 							info.setText("Posten insatt");
 						}
-						else{
+						else {
 							info.setText("Posten kan inte sättas in");
 						}
 					}
-					else
-					{
-						if (r.removeFromlist(p) == true){
+					else {
+						if (r.removeFromlist(p) == true) {
 							info.setText("Posten är borttagen");
 						}
-						else{
+						else {
 							info.setText("Posten kunde inte tas bort");
 						}
 					}
-				
-	            }
-			 
-			 
-			 
+			}
 
 		}
 	}
 	
+	private class rightMouseListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {	
+            
+			if (e.getSource() == pmiAdd) {
+            	String add = "Add";
+            	configureWindow(add);
+            }
+            else if (e.getSource() == pmiRemove){
+            	String remove = "Remove";
+            	configureWindow(remove);
+            }
+		}
+	}
+	
+	//--------------------------------------------//
     // innerklass för muslyssnare mha adapterklass
-    private class PopupHandler extends MouseAdapter
-    {
-        public void mousePressed(MouseEvent e)
-        {
-            if (e.isMetaDown()) // Höget musknapp nedtryckt?
-            {
+    private class PopupHandler extends MouseAdapter {
+        public void mousePressed(MouseEvent e) {
+            if (e.isMetaDown()) { // Hoger musknapp nedtryckt?
+            	
                 pmnEdit.show(e.getComponent(), e.getX(), e.getY());
             }
         }
