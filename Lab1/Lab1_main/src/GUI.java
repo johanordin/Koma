@@ -51,8 +51,6 @@ public class GUI
     //--------------------------------------------//
     //Buttons
 	private JButton funcButton;
-	private JButton removeButton;
-
 	//Labels
 	private JLabel firstname;
 	private JLabel lastname;
@@ -179,11 +177,12 @@ public class GUI
 		numberInput = new JTextField("");
 		info 		= new JTextField("");
 		
-		//States på Textfields
+		//Textfields - states
 		info.setEditable(false);
 		info.setForeground(Color.RED);
 		
-		//Skapar en Jpanel	
+		//--------------------------------------------//
+		//Skapar Jpanels
 		JPanel west = new JPanel();
 		west.setLayout(new GridLayout(4,1));
 
@@ -192,7 +191,6 @@ public class GUI
 		west.add(phonenumber);
 		west.add(message);
 
-		
 		JPanel center = new JPanel();
 		center.setLayout(new GridLayout(4,1));
 
@@ -201,31 +199,39 @@ public class GUI
 		center.add(numberInput);
 		center.add(info);
 	
-		
 		JPanel east = new JPanel();
 		east.setLayout(new GridLayout(1,1));
 		
 		east.add(funcButton);
 		
-		//
+		//--------------------------------------------//
+		//Configure
 		ConfigureListener configurelistener = new ConfigureListener(func);
+		
+		//Configure - ActionListener
 		fnameInput.addActionListener(configurelistener);
 		lnameInput.addActionListener(configurelistener);
 		numberInput.addActionListener(configurelistener);
-
 		funcButton.addActionListener(configurelistener);
 		
-		//Skapar en Container som alla JPanels läggs i
+		//--------------------------------------------//
+		//Skapar en Container 
 		Container c = new Container();
 		
-		mainframe.getContentPane().add(c);
+		//mainframe.getContentPane().add(c);
 		
 		c.setLayout(new BorderLayout());
 		c.add(west, BorderLayout.WEST);
 		c.add(center, BorderLayout.CENTER);
 		c.add(east, BorderLayout.EAST);
 		
+		
+		mainframe.getContentPane().add(center);
 
+		mainframe.revalidate();
+		mainframe.repaint();
+		
+		
 		mainframe.setVisible(true);
 		//setSize(400,600);
 		
@@ -305,16 +311,18 @@ public class GUI
 	}
 	private class ConfigureListener implements ActionListener {
 		
-		String function;
+		private String func1;
+		
+		public ConfigureListener() {
+		}
 		
 		public ConfigureListener(String func) {
-			function = func;
+			func1 = func;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
 			
 			 if (e.getSource() == funcButton) {
-			 	System.out.println(function);
 				String fname = fnameInput.getText();
 				String lname = lnameInput.getText();
 				String number = numberInput.getText();
@@ -324,7 +332,7 @@ public class GUI
 
 				Person p = new Person(lname, fname, number);
 				
-					if(function == "Add") {
+					if(func1 == "Add") {
 						if (r.insert(p) == true) {
 							info.setText("Posten insatt");
 						}
