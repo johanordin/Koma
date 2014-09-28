@@ -66,6 +66,9 @@ public class GUI
 	//Deklarerar ett Register
 	Register r;
 	
+	
+	private JList myList;
+	
 	/**
 	 * Method GUI
 	 *
@@ -73,7 +76,11 @@ public class GUI
 	 */
 	public GUI()
 	{
-		JFrame mainframe = new JFrame();
+		final JFrame mainframe = new JFrame();
+		Container c = mainframe.getContentPane();
+		
+		
+		String func = "Add";
 		
 		//Skapar ett nytt Register
 		r = new Register();
@@ -138,16 +145,80 @@ public class GUI
         pmiAdd.addActionListener(mouselistener);
         pmiRemove.addActionListener(mouselistener);
 		
+//////////////////////////////////////////////////////
+        
+		//--------------------------------------------//
+		//Labels
+		firstname 	= new JLabel("Förnamn: ", JLabel.RIGHT);
+		lastname 	= new JLabel("Efternamn: ", JLabel.RIGHT);
+		phonenumber = new JLabel("Telefonnr: ", JLabel.RIGHT);
+		message 	= new JLabel("Meddelande: ", JLabel.RIGHT);
+		
+		//--------------------------------------------//
+		//Buttons
+		funcButton	= new JButton(func);
+
+		//--------------------------------------------//
+		//Textfields
+		fnameInput  = new JTextField("");
+		lnameInput	= new JTextField("");
+		numberInput = new JTextField("");
+		info 		= new JTextField("");
+		
+		//Textfields - states
+		info.setEditable(false);
+		info.setForeground(Color.RED);
+		
+		//--------------------------------------------//
+		//Skapar Jpanels
+		JPanel west = new JPanel();
+		west.setLayout(new GridLayout(4,1));
+
+		west.add(firstname);
+		west.add(lastname);
+		west.add(phonenumber);
+		west.add(message);
+        
+		JPanel center = new JPanel();
+		center.setLayout(new GridLayout(4,1));
+
+		center.add(fnameInput);
+		center.add(lnameInput);
+		center.add(numberInput);
+		center.add(info);
+	
+		JPanel east = new JPanel();
+		east.setLayout(new GridLayout(2,1));
+		east.add(funcButton);
+		String[] values = {"Value1", "Value2", "Value3asdasdasdasd", "Value4"};
+        myList = new JList(values);
+        east.add(myList);
+        
+		//
+		//Lagger till container
+		c.setLayout(new BorderLayout());
+		c.add(west, BorderLayout.WEST);
+		c.add(center, BorderLayout.CENTER);
+		c.add(east, BorderLayout.EAST);
+		
+		
+		//--------------------------------------------//
+		//Configure
+		ConfigureListener configurelistener = new ConfigureListener(func);
+		
+		//Configure - ActionListener
+		fnameInput.addActionListener(configurelistener);
+		lnameInput.addActionListener(configurelistener);
+		numberInput.addActionListener(configurelistener);
+		funcButton.addActionListener(configurelistener);
+		
+		
+        mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
 		mainframe.setSize(400,200);
         mainframe.setVisible(true);
-        
-        mainframe.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent) {
-               System.exit(0);
-            }        
-         });  
-        
-        //setDefaultCloseOperation(EXIT_ON_CLOSE);
+               
+
 	}
 	
 	public void searchWindow() {
@@ -218,11 +289,11 @@ public class GUI
 		//Skapar en Container 
 		
 		
-		mainframe.getContentPane().removeAll();
+		//mainframe.getContentPane().removeAll();
 
 		
 		//Container c = new Container();
-		Container c = mainframe.getContentPane();
+		Container c = new Container();
 		//mainframe.getContentPane().add(c);
 		
 		c.setLayout(new BorderLayout());
@@ -230,8 +301,10 @@ public class GUI
 		c.add(center, BorderLayout.CENTER);
 		c.add(east, BorderLayout.EAST);
 		
-		mainframe.setContentPane(c);
-
+		//mainframe.setContentPane(c);
+		
+		mainframe.add(c);
+		
 		mainframe.revalidate();
 		mainframe.repaint();
 		
