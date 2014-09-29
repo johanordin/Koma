@@ -33,6 +33,7 @@ public class Register {
 	 */
 	public void load(String filename) throws IOException
 	{
+		//Scanner sc = new Scanner(new File("reg.txt"));
 		Scanner sc = new Scanner(new File(filename));
 
 		while( sc.hasNext() )
@@ -168,4 +169,22 @@ public class Register {
 
         outfile.close();
     }
+	
+	public String[]  update() {
+		
+		
+		int size = list.size();
+		String[] lst = new String[size];
+		
+		for (int i = 0; i < list.size(); i++){
+			
+			lst[i] = list.get(i).getFirstname();
+		}
+		
+		
+		return lst;
+		
+	}
+	
+	
 }

@@ -157,6 +157,7 @@ public class GUI
 		//--------------------------------------------//
 		//Buttons
 		funcButton	= new JButton(func);
+		funcButton.setEnabled(false);
 
 		//--------------------------------------------//
 		//Textfields
@@ -190,7 +191,7 @@ public class GUI
 		JPanel east = new JPanel();
 		east.setLayout(new GridLayout(2,1));
 		east.add(funcButton);
-		String[] values = {"Value1", "Value2", "Value3asdasdasdasd", "Value4"};
+		String[] values = {"", ""};
         myList = new JList(values);
         east.add(myList);
         
@@ -330,11 +331,14 @@ public class GUI
 	               
 		   			try {
 						r.load(filename);
+						myList.setListData(r.update());
+						funcButton.setEnabled(true);
+						
 						System.out.println("File Selected :" + file.getName());
-						//info.setText("File Selected :" + file.getName() + " öppnad");
+						info.setText("Filen: " + file.getName() + " öppnad");
 					}
 		   			catch(IOException d) {
-						System.out.println("Nått gick fel");
+		   				info.setText("Nått gick fel");
 					}
 		   			
 	            }
@@ -346,6 +350,7 @@ public class GUI
             else if (e.getSource() == mniSave) {
     			try {
 					r.save();
+					myList.setListData([""]);
 					System.out.println("Filen reg.txt sparad");
 				}
     			catch(IOException d) {
@@ -390,8 +395,6 @@ public class GUI
 		
 		private String func1;
 		
-		public ConfigureListener() {
-		}
 		
 		public ConfigureListener(String func) {
 			func1 = func;
@@ -412,6 +415,7 @@ public class GUI
 					if(func1 == "Add") {
 						if (r.insert(p) == true) {
 							info.setText("Posten insatt");
+							myList.setListData(r.update());
 						}
 						else {
 							info.setText("Posten kan inte sättas in");
