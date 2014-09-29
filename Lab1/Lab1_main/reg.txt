@@ -28,9 +28,6 @@ Ritardando     Rita           0117-20295
 Staccato       Stina          0112-12107     
 Subito         Sune           0111-37574     
 Tempo          Kalle          0114-95968     
-Test           Test           20301230123    
-Testasdasd     Testasdasd     3242342352     
-TestasdasdasdasdTestasdasdasdasd324234235212312
 Unisono        Uno            0113-16714     
 Virtuoso       Vilhelm        0114-10931     
 Xelerando      Axel           0113-89124     

@@ -79,7 +79,6 @@ public class GUI
 		final JFrame mainframe = new JFrame();
 		Container c = mainframe.getContentPane();
 		
-		
 		String func = "Add";
 		
 		//Skapar ett nytt Register
@@ -224,8 +223,6 @@ public class GUI
 	
 	public void searchWindow() {
 		
-		
-		
 	}
 	
 	
@@ -289,9 +286,7 @@ public class GUI
 		//--------------------------------------------//
 		//Skapar en Container 
 		
-		
 		//mainframe.getContentPane().removeAll();
-
 		
 		//Container c = new Container();
 		Container c = new Container();
@@ -326,15 +321,16 @@ public class GUI
             	
 	            if (returnVal == JFileChooser.APPROVE_OPTION) {
 	               java.io.File file = fileDialog.getSelectedFile();
-	               
+	          
 	               String filename = file.getName();
+	               String filepath = file.getAbsolutePath();
 	               
 		   			try {
-						r.load(filename);
+						r.load(filepath);
 						myList.setListData(r.update());
 						funcButton.setEnabled(true);
 						
-						System.out.println("File Selected :" + file.getName());
+						//System.out.println("File Selected :" + file.getName());
 						info.setText("Filen: " + file.getName() + " öppnad");
 					}
 		   			catch(IOException d) {
@@ -343,20 +339,47 @@ public class GUI
 		   			
 	            }
 	            else {
-	            	System.out.println("Open command cancelled by user." );           
+	            	info.setText("Open command cancelled by user." );           
 	            }
             
             }
             else if (e.getSource() == mniSave) {
-    			try {
-					r.save();
-					myList.setListData([""]);
-					System.out.println("Filen reg.txt sparad");
-				}
-    			catch(IOException d) {
-					System.out.println("Nått gick fel");
-				}
+            	
+            	final JFileChooser  fileDialog = new JFileChooser();
+            	
+//            	setCurrentDirectory(File);
+            	
+            	int returnVal = fileDialog.showSaveDialog(mainframe);
+            	
+	            if (returnVal == JFileChooser.APPROVE_OPTION) {
+	               
+	               java.io.File file = fileDialog.getSelectedFile();
+	       
+	               String filename = file.getName();
+	               String filepath = file.getAbsolutePath();
+            	
+	               System.out.println(filepath);
+	    			try {
+						r.save(filepath);
+						
+						
+						String[] empStr = {" ", " "};
+						myList.setListData(empStr);
+						//System.out.println("Filen: " + filename +  " sparad");
+						info.setText("Filen: " + filename +  " sparad");
+					}
+	    			catch(IOException d) {
+	    				info.setText("Nått gick fel");
+					}
+    			
+	            }
+	            else {
+	            	info.setText("Open command cancelled by user." );           
+	            }
+	            
             }
+    			
+            
             else if (e.getSource() == mniExit) {
                 System.exit(0);
             }
@@ -368,12 +391,14 @@ public class GUI
 		public void actionPerformed(ActionEvent e) {
 			
             if (e.getSource() == mniAdd){
-            	String add = "Add";
-            	configureWindow(add);
+            	//String add = "Add";
+            	//configureWindow(add);
+            	add();
             }
             else if (e.getSource() == mniRemove) {
-            	String remove = "Remove";
-            	configureWindow(remove);
+            	//String remove = "Remove";
+            	//configureWindow(remove);
+            	remove();
             }
 		}
 	}
@@ -383,10 +408,10 @@ public class GUI
 		public void actionPerformed(ActionEvent e){
 			
 			 if (e.getSource() == mniHelp) {
-                JOptionPane.showMessageDialog(mainframe, "This feature is\n" + "only available in\n" + "ShapeDrawer Pro!");
+                JOptionPane.showMessageDialog(mainframe, "Wite your name in the input textfield.\n" + "\n" + "...");
 	         }
 			 else if (e.getSource() == mniAbout) {
-                JOptionPane.showMessageDialog(mainframe, "ShapeDrawer LE 1.1\n" + "Copyright 2013-2013\n" + "Amazing Software, Inc.");
+                JOptionPane.showMessageDialog(mainframe, "Register 1.0\n" + "Copyright 2014-2014\n" + "...");
 	         }
 		}
 	}
@@ -403,32 +428,34 @@ public class GUI
 		public void actionPerformed(ActionEvent e) {
 			
 			 if (e.getSource() == funcButton) {
-				String fname = fnameInput.getText();
-				String lname = lnameInput.getText();
-				String number = numberInput.getText();
-
-				lname = lname.substring(0, 1).toUpperCase() + lname.substring(1).toLowerCase();
-				fname = fname.substring(0, 1).toUpperCase() + fname.substring(1).toLowerCase();
-
-				Person p = new Person(lname, fname, number);
-				
-					if(func1 == "Add") {
-						if (r.insert(p) == true) {
-							info.setText("Posten insatt");
-							myList.setListData(r.update());
-						}
-						else {
-							info.setText("Posten kan inte sättas in");
-						}
-					}
-					else {
-						if (r.removeFromlist(p) == true) {
-							info.setText("Posten är borttagen");
-						}
-						else {
-							info.setText("Posten kunde inte tas bort");
-						}
-					}
+				 
+				add();
+//				String fname = fnameInput.getText();
+//				String lname = lnameInput.getText();
+//				String number = numberInput.getText();
+//
+//				lname = lname.substring(0, 1).toUpperCase() + lname.substring(1).toLowerCase();
+//				fname = fname.substring(0, 1).toUpperCase() + fname.substring(1).toLowerCase();
+//
+//				Person p = new Person(lname, fname, number);
+//				
+//					if(func1 == "Add") {
+//						if (r.insert(p) == true) {
+//							info.setText("Posten insatt");
+//							myList.setListData(r.update());
+//						}
+//						else {
+//							info.setText("Posten kan inte sättas in");
+//						}
+//					}
+//					else {
+//						if (r.removeFromlist(p) == true) {
+//							info.setText("Posten är borttagen");
+//						}
+//						else {
+//							info.setText("Posten kunde inte tas bort");
+//						}
+//					}
 			}
 
 		}
@@ -438,12 +465,14 @@ public class GUI
 		public void actionPerformed(ActionEvent e) {	
             
 			if (e.getSource() == pmiAdd) {
-            	String add = "Add";
-            	configureWindow(add);
+            	//String add = "Add";
+            	//configureWindow(add);
+				add();
             }
             else if (e.getSource() == pmiRemove){
-            	String remove = "Remove";
-            	configureWindow(remove);
+//            	String remove = "Remove";
+//            	configureWindow(remove);
+            	remove();
             }
 		}
 	}
@@ -457,6 +486,47 @@ public class GUI
                 pmnEdit.show(e.getComponent(), e.getX(), e.getY());
             }
         }
+    }
+    
+    public void add(){
+    	
+		String fname = fnameInput.getText();
+		String lname = lnameInput.getText();
+		String number = numberInput.getText();
+
+		lname = lname.substring(0, 1).toUpperCase() + lname.substring(1).toLowerCase();
+		fname = fname.substring(0, 1).toUpperCase() + fname.substring(1).toLowerCase();
+
+		Person p = new Person(lname, fname, number);
+		
+		if (r.insert(p) == true) {
+			info.setText("Posten insatt");
+			myList.setListData(r.update());
+		}
+		else {
+			info.setText("Posten kan inte sättas in");
+		}
+
+    }
+    
+    public void remove(){
+    	
+		String fname = fnameInput.getText();
+		String lname = lnameInput.getText();
+		String number = numberInput.getText();
+
+		lname = lname.substring(0, 1).toUpperCase() + lname.substring(1).toLowerCase();
+		fname = fname.substring(0, 1).toUpperCase() + fname.substring(1).toLowerCase();
+
+		Person p = new Person(lname, fname, number);
+		
+		if (r.removeFromlist(p) == true) {
+			info.setText("Posten är borttagen");
+		}
+		else {
+			info.setText("Posten kunde inte tas bort");
+		}
+
     }
 
 

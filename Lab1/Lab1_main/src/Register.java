@@ -152,14 +152,14 @@ public class Register {
 	 *Skriver ut hela listan
 	 *
 	 */
-	public void save() throws IOException
+	public void save(String filename) throws IOException
     {
 
         Collections.sort(list);
 
         PrintWriter outfile = new PrintWriter
                              (new BufferedWriter
-                             (new FileWriter("reg.txt")));
+                             (new FileWriter(filename)));
 
 
         for (int i = 0; i < list.size(); i++)
